@@ -1,30 +1,28 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
+
+from app.services.user import GetUserDep, AddUserDep, UpdateUserDep
+from app.schemas.user import UserResponse
 
 
 router = APIRouter()
 
 
-@router.get("/get-user")
-def get_user():
-    # query db with user id
-    # return user
-    return None
+@router.get("/get-user/{username}", response_model=UserResponse)
+def get_user(user: GetUserDep):
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found.")
+    return user
 
 
-@router.post("/add-user")
-async def add_user():
-    # query db with provided username
-    # verify username does not already exist
-
-    # hash password
-    # add user to db (username, hashed_pw, current_page)
-    # return success message
-    return None
+@router.post("/create-user", response_model=UserResponse)
+async def create_user(message: AddUserDep):
+    if not message:
+        raise HTTPException(status_code=400, detail="Unable to create user.")
+    return message
 
 
-@router.patch("/edit-user")
-async def edit_user():
-    # query db with user id
-    # make patch query with updated info
-    # return updated user
-    return None
+@router.patch("/update-user/{username}", response_model=UserResponse)
+async def update_user(user: UpdateUserDep):
+    if not user:
+        raise HTTPException(status_code=400, detail="Unable to update user.")
+    return user
