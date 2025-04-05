@@ -4,7 +4,7 @@ from fastapi import Depends
 from app.db.session import SessionDep
 from app.models.user import UserDB
 from app.schemas.user import UserResponse, UserRegister, UserUpdate
-from app.util import convert_to_schema, get_current_user, hash_password, save_user
+from app.utils.user import convert_to_schema, get_current_user, hash_password, save_user
 
 
 def get_user_service(username: str, db: SessionDep):
