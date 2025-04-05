@@ -15,10 +15,10 @@ def get_user(user: GetUserDep):
 
 
 @router.post("/create-user", response_model=UserResponse)
-async def create_user(message: AddUserDep):
-    if not message:
+async def create_user(user: AddUserDep):
+    if not user:
         raise HTTPException(status_code=400, detail="Unable to create user.")
-    return message
+    return user
 
 
 @router.patch("/update-user/{username}", response_model=UserResponse)
