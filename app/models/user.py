@@ -7,7 +7,7 @@ class UserDB(SQLModel, table=True):
     __table_args__ = {"schema": "onboarding-flow"}
     __tablename__: str = "users"
     username: str = Field(primary_key=True, max_length=50)
-    current_page: int = Field(default=1)
+    current_page: int = Field(default=2)
     hashed_pw: str = Field(max_length=255, nullable=False)
     about: Optional[str] = Field(default=None)
     dob: Optional[date] = Field(default=None)
