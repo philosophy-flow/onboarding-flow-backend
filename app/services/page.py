@@ -2,7 +2,7 @@ from typing import Annotated, List
 from fastapi import Depends
 
 from app.db.session import SessionDep
-from app.schemas.page import Page
+from app.schemas.page import Page, Component
 from app.utils.page import get_db_page, get_db_pages, get_db_components
 
 
@@ -38,7 +38,12 @@ def update_page_service(updated_page: Page, db: SessionDep):
     return sorted(pages, key=lambda p: p.page_number)
 
 
+def get_unused_components_service(db: SessionDep):
+    return get_db_components(db, True)
+
+
 # dependencies
 
 GetPagesDep = Annotated[List[Page], Depends(get_pages_service)]
 UpdatePagesDep = Annotated[List[Page], Depends(update_page_service)]
+UnusedComponentsDep = Annotated[List[Component], Depends(get_unused_components_service)]

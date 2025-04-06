@@ -12,6 +12,11 @@ def get_db_page(db, page_number):
     return db.exec(select_db_page).first()
 
 
-def get_db_components(db):
-    select_db_components = select(ComponentDB)
+def get_db_components(db, unused=False):
+    if not unused:
+        select_db_components = select(ComponentDB)
+    else:
+        select_db_components = select(ComponentDB).where(
+            ComponentDB.page_number == None
+        )
     return db.exec(select_db_components).all()
