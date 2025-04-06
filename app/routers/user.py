@@ -46,3 +46,13 @@ async def update_user(user: UpdateUserDep):
     if not user:
         raise HTTPException(status_code=400, detail="Unable to update user.")
     return user
+
+
+@router.post("/logout-user")
+async def delete_user(response: Response):
+    response.delete_cookie(
+        key="username_token",
+        httponly=True,
+        secure=False,
+        samesite="lax",
+    )
