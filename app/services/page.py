@@ -7,7 +7,8 @@ from app.utils.page import get_db_page, get_db_pages, get_db_components
 
 
 def get_pages_service(db: SessionDep):
-    return get_db_pages(db)
+    pages = get_db_pages(db)
+    return sorted(pages, key=lambda p: p.page_number)
 
 
 def update_page_service(updated_page: Page, db: SessionDep):
@@ -33,7 +34,8 @@ def update_page_service(updated_page: Page, db: SessionDep):
 
     db.commit()
 
-    return get_db_pages(db)
+    pages = get_db_pages(db)
+    return sorted(pages, key=lambda p: p.page_number)
 
 
 # dependencies
