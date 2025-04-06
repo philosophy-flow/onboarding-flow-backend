@@ -12,8 +12,10 @@ def get_user_service(
     db: SessionDep,
     username_token: Annotated[Optional[str], Cookie()] = None,
 ):
-    if username == "refresh":
-        username = username_token or ""
+    if username == "refresh" and username_token:
+        username = username_token
+    elif username == "refresh":
+        return None
 
     db_user: Optional[UserDB] = get_current_user(db, username)
     if not db_user:
