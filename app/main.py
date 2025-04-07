@@ -30,5 +30,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.get("/")
+def read_root():
+    return {"message": "Service is up."}
+
+
 app.include_router(user.router, prefix="/api")
 app.include_router(page.router, prefix="/api")
